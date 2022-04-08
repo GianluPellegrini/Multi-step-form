@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import SignUpInfo from "./SignUpInfo";
 import PersonalInfo from "./PersonalInfo";
 import OtherInfo from "./OtherInfo";
+import MongoService from "../services/fetch";
 
 function Form() {
   const [page, setPage] = useState(0); //Gestisce le pagine
@@ -14,6 +15,11 @@ function Form() {
     nazionalita: "",
     altro: "",
   });
+
+  const addUser = async (formData) => {
+    console.log(formData);
+    await MongoService.addUser(formData);
+  };
 
   const FormTitles = [
     "Credenziali di accesso",
@@ -32,7 +38,7 @@ function Form() {
   };
 
   return (
-    <form className="form" method="post" action="/nuovoutente">
+    <div className="form">
       <div className="progressbar">
         <div
           style={{ width: page === 0 ? "33.3%" : page == 1 ? "66.6%" : "100%" }} //Dimensione progress
@@ -44,7 +50,7 @@ function Form() {
         </div>
         <div className="body">{PageDisplay()}</div>
         <div className="footer">
-          <a
+          <button
             //disabilitato nella prima pagina
             onClick={() => {
               if (page > 0) {
@@ -53,12 +59,14 @@ function Form() {
             }}
           >
             Indietro
-          </a>
+          </button>
 
           {page === FormTitles.length - 1 ? (
-            <button type="submit">Concludi</button>
+            <button type="button" onClick={() => addUser(formData)}>
+              Concludi
+            </button>
           ) : (
-            <a
+            <button
               onClick={() => {
                 if (page === FormTitles.length - 1) {
                   alert("Ora sei iscritto");
@@ -69,11 +77,11 @@ function Form() {
               }}
             >
               Prossimo
-            </a>
+            </button>
           )}
         </div>
       </div>
-    </form>
+    </div>
   );
 }
 

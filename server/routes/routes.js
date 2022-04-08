@@ -1,6 +1,7 @@
 const express = require("express");
 const Utente = require("../models/Utente");
 const router = express.Router();
+const bcrypt = require("bcrypt");
 
 router.post("/nuovoutente", async function (req, res) {
   const nome = req.body.nome;

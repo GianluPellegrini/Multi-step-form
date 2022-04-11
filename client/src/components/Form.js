@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import SignUpInfo from "./SignUpInfo";
 import PersonalInfo from "./PersonalInfo";
 import OtherInfo from "./OtherInfo";
+import UserInfo from "./UserInfo";
 import MongoService from "../services/fetch";
 
 function Form() {
@@ -25,6 +26,7 @@ function Form() {
     "Credenziali di accesso",
     "Informazioni personali",
     "Altro",
+    "Conferma",
   ];
 
   const PageDisplay = () => {
@@ -32,8 +34,10 @@ function Form() {
       return <SignUpInfo formData={formData} setFormData={setFormData} />;
     } else if (page === 1) {
       return <PersonalInfo formData={formData} setFormData={setFormData} />;
-    } else {
+    } else if (page === 2) {
       return <OtherInfo formData={formData} setFormData={setFormData} />;
+    } else {
+      return <UserInfo formData={formData} setFormData={setFormData} />;
     }
   };
 
@@ -41,7 +45,16 @@ function Form() {
     <div className="form">
       <div className="progressbar">
         <div
-          style={{ width: page === 0 ? "33.3%" : page == 1 ? "66.6%" : "100%" }} //Dimensione progress
+          style={{
+            width:
+              page === 0
+                ? "25%"
+                : page === 1
+                ? "50%"
+                : page === 2
+                ? "75%"
+                : "100%",
+          }} //Dimensione progress
         ></div>
       </div>
       <div className="form-container">
